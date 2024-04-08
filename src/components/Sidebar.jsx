@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Sidebar.module.css'
 import Logo from "./Logo.jsx";
-import AppNav from "./AppNav.jsx";
+import AppNav from "./AppNav/AppNav.jsx";
 import {Outlet} from "react-router-dom";
 function Sidebar(props) {
     return (

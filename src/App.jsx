@@ -6,9 +6,11 @@ import PageNotFound from "./pages/PageNotFound.jsx";
 import PageNav from "./components/PageNav.jsx";
 import AppLayout from "./pages/AppLayout.jsx";
 import {useEffect, useState} from "react";
-import CityList from "./components/CityList.jsx";
+import CityList from "./components/CityList/CityList.jsx";
+import CountryList from "./components/CountryList/CountryList.jsx";
 
 const BASE_URL = 'http://localhost:9000'
+
 
 function App() {
     // const x = 23
@@ -16,6 +18,8 @@ function App() {
 
     const [cities, setCities] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+
+
 
     useEffect(() => {
 
@@ -47,7 +51,7 @@ function App() {
                 <Route path='app' element={<AppLayout/>}>
                     <Route index element={<p>lIST of clients</p>}/>
                     <Route path='cities' element={<CityList cities={cities} isLoading={isLoading} />}/>
-                    <Route path='countries' element={<p> list of countries</p>}/>
+                    <Route path='countries' element={<CountryList isLoading={isLoading}  cities={cities} />}/>
                     <Route path='form' element={<p> Form</p>}/>
                 </Route>
                 <Route path='*' element={<PageNotFound/>}/>
