@@ -1,12 +1,12 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Product from "./pages/Product.jsx";
+import Product from "./pages/Product/Product.jsx";
 import PricingPage from "./pages/PricingPage.jsx";
-import Homepage from "./pages/Homepage.jsx";
+import Homepage from "./pages/Homepage/Homepage.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
-import PageNav from "./components/PageNav.jsx";
-import AppLayout from "./pages/AppLayout.jsx";
+import PageNav from "./components/PageNav/PageNav.jsx";
+import AppLayout from "./pages/AppLayout/AppLayout.jsx";
 import {useEffect, useState} from "react";
-import CityList from "./components/CityList/CityList.jsx";
+import CityList from "./components/City/CityList/CityList.jsx";
 import CountryList from "./components/CountryList/CountryList.jsx";
 
 const BASE_URL = 'http://localhost:9000'
