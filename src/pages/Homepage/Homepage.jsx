@@ -1,4 +1,5 @@
 import styles from "./Homepage.module.css";
+import {NavLink} from "react-router-dom";
 
 export default function Homepage() {
   return (
@@ -14,6 +15,7 @@ export default function Homepage() {
           of. Never forget your wonderful experiences, and show your friends how
           you have wandered the world.
         </h2>
+        <NavLink to='app' >START TRACKING NOW</NavLink>
       </section>
     </main>
   );

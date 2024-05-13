@@ -33,7 +33,7 @@ function City() {
 
   return (<>
       <h1>City {id} </h1>
-      <p>{lat}, {lng}</p>
+      <p>position: {lat}, {lng}</p>
 
   </>)
   // return (

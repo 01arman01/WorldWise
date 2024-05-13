@@ -17,10 +17,12 @@ function CityItem({city}) {
 
     const {cityName,emoji,date,id, position} = city
     // console.log(flag(emoji))
-    console.log(position)
     return (
         <li >
-           <Link to={`${id}?lat=${position.lat}&lng=${position.lng}`}   className={s.cityItem}>
+           <Link
+               to={`${id}?lat=${position.lat}&lng=${position.lng}`}
+                 className={s.cityItem}
+           >
                 <span className={s.emoji}>{
                     emoji
                 }
