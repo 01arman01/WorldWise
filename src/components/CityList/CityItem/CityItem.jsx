@@ -28,7 +28,7 @@ function CityItem({city}) {
                 }
             </span>
                <h3 className={s.name}>{cityName}</h3>
-               <time className={s.date}>({formaDate(date)})</time>
+                       <time className={s.date}>({formaDate(date)})</time>
                <button className={s.deleteBtn}>&times;</button>
            </Link>
         </li>
