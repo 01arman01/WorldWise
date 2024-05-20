@@ -1,5 +1,4 @@
 import React from 'react';
-import AppNav from "../../components/AppNav/AppNav.jsx";
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 
 import s from './AppLayout.module.css'

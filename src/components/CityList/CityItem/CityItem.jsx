@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './CityItem.module.css'
 import {Link} from "react-router-dom";
+import {useCties} from "../../../contexts/CitiesContext.jsx";
 // import flag from 'country-code-emoji';
 
 
@@ -14,14 +15,14 @@ const formaDate = (date)=>{
 
 
 function CityItem({city}) {
-
+   const {currentCity} = useCties()
     const {cityName,emoji,date,id, position} = city
     // console.log(flag(emoji))
     return (
         <li >
            <Link
                to={`${id}?lat=${position.lat}&lng=${position.lng}`}
-                 className={s.cityItem}
+                 className={`${s.cityItem} ${id=== currentCity.id?s['cityItem--active']:''}`}
            >
                 <span className={s.emoji}>{
                     emoji

@@ -3,18 +3,20 @@
   max-height: 70%;
   background-color: var(--color-dark--2);
   border-radius: 7px;
-  overflow: scroll;
+  /*overflow: scroll;*/
 
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  /*overflow: hidden;*/
 }
 
 .row {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
 }
 
 .city h6 {
