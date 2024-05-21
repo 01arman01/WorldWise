@@ -23,5 +23,4 @@ function CountryList() {
         </ul>
     )
 }
-
 export default CountryList;
