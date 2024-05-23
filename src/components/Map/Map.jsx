@@ -5,6 +5,7 @@ import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents} from "reac
 import {useCties} from "../../contexts/CitiesContext.jsx";
 import {useGeolocation} from "../../hooks/useGeolocation.js";
 import Button from "../Button/Button.jsx";
+import {useURLPosition} from "../../hooks/useURLPosition.js";
 
 function Map(props) {
 
@@ -17,8 +18,10 @@ function Map(props) {
     } = useGeolocation()
 
     //
-    const mapLat = searchParams.get('lat')
-    const mapLng = searchParams.get('lng')
+    // const mapLat = searchParams.get('lat')
+    // const mapLng = searchParams.get('lng')
+
+    const [mapLat,mapLng] = useURLPosition()
 
     useEffect(() => {
    if(mapLng && mapLat) setMapPosition([mapLat,mapLng])
@@ -27,8 +30,6 @@ function Map(props) {
     useEffect(() => {
         if (geolocationPosition) setMapPosition([geolocationPosition.lat,geolocationPosition.lng])
     }, [geolocationPosition]);
-
-    console.log(geolocationPosition)
     return (
         <div className={s.mapContainer} >
             {!geolocationPosition && <Button type='position' onClick={getPosition}>{isLoadingPosition?'...Loading':'Use your position'}</Button>}
@@ -68,7 +69,6 @@ function DetectClick() {
     useMapEvents({
         click:e=> {
             navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
-            console.log(e)
         }
     })
     return null
