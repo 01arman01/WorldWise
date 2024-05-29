@@ -43,6 +43,30 @@ export const CitiesProvider = ({ children }) => {
 
 
     }
+    async function  createCity (newCity){
+
+        try {
+            setIsLoading(true)
+            const res = await fetch(`${BASE_URL}/cities`,{
+                method:'POST',
+                body:JSON.stringify(newCity),
+                headers:{
+                    "Content-type":"Application/json",
+
+                }
+            })
+            const data = await res.json()
+            setCities(cities=>[...cities,newCity])
+            console.log(data)
+        } catch {
+            alert('there was an error loading data...')
+        } finally {
+            setIsLoading(false)
+        }
+
+
+
+    }
 
 
      return <CitiesContext.Provider
@@ -50,7 +74,8 @@ export const CitiesProvider = ({ children }) => {
          cities: cities,
          isLoading: isLoading,
          currentCity,
-         getCity
+         getCity,
+         createCity
      }}
      >{children}</CitiesContext.Provider>;
 }

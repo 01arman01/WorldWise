@@ -11,6 +11,7 @@ import BackButton from "../BackButton.jsx";
 import {useURLPosition} from "../../hooks/useURLPosition.js";
 import Message from "../Message/Message.jsx";
 import DatePicker from "react-datepicker";
+import {useCties} from "../../contexts/CitiesContext.jsx";
 
 export function convertToEmoji(countryCode) {
     const codePoints = countryCode
@@ -24,47 +25,60 @@ const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client"
 
 function Form() {
 
-    const  [isLoadingGeocoding,setIsLoadingGeoCoding] = useState(false)
-    const [lat,lng] = useURLPosition()
-
+    const [isLoadingGeocoding, setIsLoadingGeoCoding] = useState(false)
+    const [lat, lng] = useURLPosition()
+    const {createCity} = useCties()
     const [cityName, setCityName] = useState("");
     const [country, setCountry] = useState("");
     const [date, setDate] = useState(new Date());
     const [notes, setNotes] = useState("");
-    const[emoji,setEmoji] = useState()
-    const [geocodingError,setGeocodingError] = useState()
+    const [emoji, setEmoji] = useState()
+    const [geocodingError, setGeocodingError] = useState()
 
 
     useEffect(() => {
         // if(!lat && !lng) return
-        const fetchCityData =  async ()=>{
+        const fetchCityData = async () => {
             try {
                 setIsLoadingGeoCoding(true)
                 setGeocodingError('')
-                const res =await fetch(`${BASE_URL}?latitude=${lat}&longitude=${lng}`)
+                const res = await fetch(`${BASE_URL}?latitude=${lat}&longitude=${lng}`)
                 const data = await res.json()
-                if (!data.countryCode) throw new Error(`that doesn't seem to be a city. click someware else 😉 `)
+                if (!data.countryCode) throw new Error(`that doesn't seem to be a city. click somewhere else 😉 `)
 
-                console.log(data)
+
                 setCityName(data.city || data.locality || "")
                 setCountry(data.countryName)
                 setEmoji(convertToEmoji(data.countryCode))
-            }catch (e) {
+            } catch (e) {
                 setGeocodingError(e.message)
-            }finally {
+            } finally {
                 setIsLoadingGeoCoding(false)
             }
 
         }
         fetchCityData()
-     }, [lat,lng]);
-   const  handleSubmitFunction = (e)=>{
-       e.preventDefault()
+    }, [lat, lng]);
 
-   }
+    const handleSubmitFunction = (e) => {
+        e.preventDefault()
+        if (!cityName  || !date) {
+            return
+        }
+        const newCity = {
+            cityName,
+            country,
+            emoji,
+            date,
+            notes,
+            position:{lat,lng}
+        }
+        createCity(newCity)
 
-   if (geocodingError) return <Message message={geocodingError} />
-   if(!lat &&  !lng) return  <Message message='Start by clicking somewhere on the map' />
+    }
+
+    if (geocodingError) return <Message message={geocodingError}/>
+    if (!lat && !lng) return <Message message='Start by clicking somewhere on the map'/>
     return (
         <form className={styles.form} onSubmit={handleSubmitFunction}>
             <div className={styles.row}>
@@ -74,7 +88,7 @@ function Form() {
                     onChange={(e) => setCityName(e.target.value)}
                     value={cityName}
                 />
-                 <span className={styles.flag}>{emoji}</span>
+                <span className={styles.flag}>{emoji}</span>
             </div>
 
             <div className={styles.row}>
@@ -84,7 +98,12 @@ function Form() {
                 {/*    onChange={(e) => setDate(e.target.value)}*/}
                 {/*    value={date}*/}
                 {/*/>*/}
-                <DatePicker selected={date} onChange={(date) => setDate(date)} />
+                <DatePicker
+                    id='date'
+                    selected={date}
+                    onChange={(date) => setDate(date)}
+                    dateFormat={'dd/mm/yyyy'}
+                />
             </div>
 
             <div className={styles.row}>
